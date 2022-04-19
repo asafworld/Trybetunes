@@ -30,13 +30,16 @@ class Search extends React.Component {
         searchValue: '',
         loading: false,
         resultEmpty: true,
+        resultFull: false,
+        artist: albumArray });
+    } else {
+      this.setState({
+        searchValue: '',
+        loading: false,
+        resultFull: true,
+        resultEmpty: false,
         artist: albumArray });
     }
-    this.setState({
-      searchValue: '',
-      loading: false,
-      resultFull: true,
-      artist: albumArray });
   }
 
   buttonAble() {
