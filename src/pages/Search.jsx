@@ -64,7 +64,6 @@ class Search extends React.Component {
       resultFull,
       artist,
       inputLastValue } = this.state;
-    console.log(artist);
     return (
       <div data-testid="page-search">
         <Header />
