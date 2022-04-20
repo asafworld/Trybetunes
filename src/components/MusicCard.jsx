@@ -4,7 +4,7 @@ import getMusics from '../services/musicsAPI';
 import Loading from '../pages/Loading';
 import { addSong,
   getFavoriteSongs,
-  saveFavoriteSongs } from '../services/favoriteSongsAPI';
+  removeSong } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   constructor() {
@@ -32,7 +32,10 @@ class MusicCard extends React.Component {
     const verification = favorite.some((each) => each.trackId === track.trackId);
     if (verification) {
       const newArr = favorite.filter((element) => element.trackId !== track.trackId);
-      saveFavoriteSongs(newArr);
+      this.setState({ loading: true });
+      const removedSong = await removeSong(track);
+      console.log(removedSong);
+      this.setState({ loading: false });
       this.setState({ favorite: newArr });
     } else {
       this.setState({ loading: true });
