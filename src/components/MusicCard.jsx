@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getMusics from '../services/musicsAPI';
 import Loading from '../pages/Loading';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong,
+  getFavoriteSongs,
+  saveFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class MusicCard extends React.Component {
   constructor() {
@@ -20,8 +22,9 @@ class MusicCard extends React.Component {
   componentDidMount = async () => {
     const { id } = this.props;
     this.setState({ loading: true });
+    const savedFaves = await getFavoriteSongs();
     const musicsResult = await getMusics(id);
-    this.setState({ musicAlbum: musicsResult, loading: false });
+    this.setState({ musicAlbum: musicsResult, loading: false, favorite: savedFaves });
   }
 
   favoriteSong = async (track) => {
@@ -29,7 +32,7 @@ class MusicCard extends React.Component {
     const verification = favorite.some((each) => each.trackId === track.trackId);
     if (verification) {
       const newArr = favorite.filter((element) => element.trackId !== track.trackId);
-      console.log(newArr);
+      saveFavoriteSongs(newArr);
       this.setState({ favorite: newArr });
     } else {
       this.setState({ loading: true });
@@ -42,15 +45,12 @@ class MusicCard extends React.Component {
 
   checkedChanged(trackId) {
     const { favorite } = this.state;
-    console.log(favorite);
     const checkedResult = favorite.some((track) => track.trackId === trackId);
-    console.log(checkedResult);
     return checkedResult;
   }
 
   render() {
-    const { musicAlbum, loading, favorite } = this.state;
-    console.log(favorite);
+    const { musicAlbum, loading } = this.state;
     return (
       <section>
         { loading ? <Loading /> : (

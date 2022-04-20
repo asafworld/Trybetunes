@@ -7,7 +7,7 @@ if (!JSON.parse(localStorage.getItem(FAVORITE_SONGS_KEY))) {
 }
 const readFavoriteSongs = () => JSON.parse(localStorage.getItem(FAVORITE_SONGS_KEY));
 
-const saveFavoriteSongs = (favoriteSongs) => localStorage
+export const saveFavoriteSongs = (favoriteSongs) => localStorage
   .setItem(FAVORITE_SONGS_KEY, JSON.stringify(favoriteSongs));
 
 // --------------------------------------------------------------------
